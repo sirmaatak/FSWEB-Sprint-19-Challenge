@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "retweet",schema = "public")
+@Table(name = "retweet",schema = "tweet")
 public class Retweet {
 
     @Id
@@ -22,5 +22,10 @@ public class Retweet {
     @Column(name = "create_date")
     private LocalDate createDate;
 
-    //TODO: user_id ve tweet_id ile baglanacak
+    //User ve Tweet tablosu ile bagladik
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Tweet tweet;
 }

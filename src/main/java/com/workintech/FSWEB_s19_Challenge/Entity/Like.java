@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="like",schema = "public")
+@Table(name="like",schema = "tweet")
 public class Like {
 
     @Id
@@ -17,5 +17,10 @@ public class Like {
     private Long id;
 
 
-    //TODO:user_id ve tweet_id ile baglanacak
+    //User ve Tweet tablosu ile bagladik
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Tweet tweet;
 }

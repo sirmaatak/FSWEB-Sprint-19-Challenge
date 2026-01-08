@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="tweet",schema = "public")
+@Table(name="tweet",schema = "tweet")
 public class Tweet {
 
     @Id
@@ -29,6 +29,8 @@ public class Tweet {
     @Column(name = "update_date")
     private LocalDate updateDate;
 
-
-    //TODO: user_id ile baglanacak
+    // User ile Tweet tablosunu bagladik
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
