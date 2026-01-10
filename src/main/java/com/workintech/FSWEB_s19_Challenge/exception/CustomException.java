@@ -10,11 +10,8 @@ import org.springframework.http.HttpStatus;
 @Setter
 @NoArgsConstructor
 public class CustomException extends RuntimeException{
-    private HttpStatus httpStatus;
 
-    public CustomException(String message) {
-        super(message);
-    }
+    private HttpStatus httpStatus;
 
     public CustomException(String message, HttpStatus httpStatus) {
         super(message);

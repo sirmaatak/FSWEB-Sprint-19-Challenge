@@ -6,6 +6,7 @@ import com.workintech.FSWEB_s19_Challenge.dto.RegisterRequest;
 import com.workintech.FSWEB_s19_Challenge.exception.CustomException;
 import com.workintech.FSWEB_s19_Challenge.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User register(RegisterRequest registerRequest) {
         if(userRepository.findByUserName(registerRequest.getFullName())!=null){
-            //TODO : throw exception because this user is already register
+            throw new CustomException(
+                    "User already registered with this username",
+                    HttpStatus.BAD_REQUEST
+            );
         }
         User user=new User();
         user.setFullName(registerRequest.getFullName());
@@ -31,13 +35,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public String login(LoginRequest loginRequest) {
         User user=userRepository.findByUserName(loginRequest.getFullName());
+
         if(user==null){
-            //TODO : throw exception because this user doesnt exist
-            throw new CustomException("This user is already exist");
+            throw new CustomException(
+                    "User already registered with this username",
+                    HttpStatus.BAD_REQUEST
+            );
         }
-        if(!passwordEncoder.matches(loginRequest.getPassword(),loginRequest.getPassword())){
-            //TODO : throw exception because this user dont match the user that i found
-            throw new CustomException("This user not found");
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new CustomException(
+                    "Username or password is incorrect",
+                    HttpStatus.UNAUTHORIZED
+            );
         }
 
         return "Login Successful for User : " + user.getFullName();
