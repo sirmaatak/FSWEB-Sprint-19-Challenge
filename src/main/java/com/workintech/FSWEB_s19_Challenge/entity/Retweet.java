@@ -12,8 +12,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "retweet",schema = "tweet")
-public class Retweet {
+@Table(
+        name = "retweet",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tweet_id"})
+)public class Retweet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +26,10 @@ public class Retweet {
 
     //User ve Tweet tablosu ile bagladik
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 }
