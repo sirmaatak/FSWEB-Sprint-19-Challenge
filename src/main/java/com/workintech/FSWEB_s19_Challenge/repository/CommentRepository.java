@@ -1,6 +1,6 @@
 package com.workintech.FSWEB_s19_Challenge.repository;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Comment;
+import com.workintech.FSWEB_s19_Challenge.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

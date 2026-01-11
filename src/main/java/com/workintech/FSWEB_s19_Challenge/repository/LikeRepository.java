@@ -1,6 +1,6 @@
 package com.workintech.FSWEB_s19_Challenge.repository;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Like;
+import com.workintech.FSWEB_s19_Challenge.entity.Like;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

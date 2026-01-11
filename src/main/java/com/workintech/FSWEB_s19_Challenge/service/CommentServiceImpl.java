@@ -1,8 +1,8 @@
 package com.workintech.FSWEB_s19_Challenge.service;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Comment;
-import com.workintech.FSWEB_s19_Challenge.Entity.Tweet;
-import com.workintech.FSWEB_s19_Challenge.Entity.User;
+import com.workintech.FSWEB_s19_Challenge.entity.Comment;
+import com.workintech.FSWEB_s19_Challenge.entity.Tweet;
+import com.workintech.FSWEB_s19_Challenge.entity.User;
 import com.workintech.FSWEB_s19_Challenge.dto.CommentRequest;
 import com.workintech.FSWEB_s19_Challenge.exception.CustomException;
 import com.workintech.FSWEB_s19_Challenge.repository.CommentRepository;

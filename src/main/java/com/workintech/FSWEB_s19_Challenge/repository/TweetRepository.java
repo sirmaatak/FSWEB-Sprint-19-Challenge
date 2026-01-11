@@ -1,6 +1,6 @@
 package com.workintech.FSWEB_s19_Challenge.repository;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Tweet;
+import com.workintech.FSWEB_s19_Challenge.entity.Tweet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

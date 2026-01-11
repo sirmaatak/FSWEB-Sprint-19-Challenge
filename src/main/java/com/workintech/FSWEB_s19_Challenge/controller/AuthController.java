@@ -1,6 +1,6 @@
 package com.workintech.FSWEB_s19_Challenge.controller;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.User;
+import com.workintech.FSWEB_s19_Challenge.entity.User;
 import com.workintech.FSWEB_s19_Challenge.dto.LoginRequest;
 import com.workintech.FSWEB_s19_Challenge.dto.RegisterRequest;
 import com.workintech.FSWEB_s19_Challenge.service.UserService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public User register(@RequestBody RegisterRequest registerRequest){

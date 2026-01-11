@@ -1,8 +1,8 @@
 package com.workintech.FSWEB_s19_Challenge.service;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Like;
-import com.workintech.FSWEB_s19_Challenge.Entity.Tweet;
-import com.workintech.FSWEB_s19_Challenge.Entity.User;
+import com.workintech.FSWEB_s19_Challenge.entity.Like;
+import com.workintech.FSWEB_s19_Challenge.entity.Tweet;
+import com.workintech.FSWEB_s19_Challenge.entity.User;
 import com.workintech.FSWEB_s19_Challenge.exception.CustomException;
 import com.workintech.FSWEB_s19_Challenge.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.workintech.FSWEB_s19_Challenge.service;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Tweet;
+import com.workintech.FSWEB_s19_Challenge.entity.Tweet;
 import com.workintech.FSWEB_s19_Challenge.dto.TweetRequest;
 
 import java.util.List;

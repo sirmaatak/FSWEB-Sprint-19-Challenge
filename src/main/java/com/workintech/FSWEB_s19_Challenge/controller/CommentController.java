@@ -1,6 +1,6 @@
 package com.workintech.FSWEB_s19_Challenge.controller;
 
-import com.workintech.FSWEB_s19_Challenge.Entity.Comment;
+import com.workintech.FSWEB_s19_Challenge.entity.Comment;
 import com.workintech.FSWEB_s19_Challenge.dto.CommentRequest;
 import com.workintech.FSWEB_s19_Challenge.service.CommentService;
 import lombok.RequiredArgsConstructor;
