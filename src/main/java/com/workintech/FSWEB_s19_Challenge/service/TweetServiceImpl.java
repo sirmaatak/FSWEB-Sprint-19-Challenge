@@ -40,11 +40,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional
     public Tweet update(Long id, TweetRequest tweetRequest) {
 
-        Tweet tweet = tweetRepository.findById(id)
-                .orElseThrow(() -> new CustomException(
-                        "Tweet not found with id: " + id,
-                        HttpStatus.NOT_FOUND
-                ));
+        Tweet tweet = findById(id);
 
         if (tweet.getUser() == null ||
                 !tweet.getUser().getId().equals(userService.getCurrentUser().getId())) {
@@ -64,11 +60,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional
     public void delete(Long id) {
 
-        Tweet tweet = tweetRepository.findById(id)
-                .orElseThrow(() -> new CustomException(
-                        "Tweet not found with id: " + id,
-                        HttpStatus.NOT_FOUND
-                ));
+        Tweet tweet = findById(id);
 
         if (tweet.getUser() == null ||
                 !tweet.getUser().getId().equals(userService.getCurrentUser().getId())) {
