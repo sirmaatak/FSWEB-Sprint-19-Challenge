@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="User",schema="tweet")
+@Table(name="users",schema="tweet")
 public class User implements UserDetails {
 
     @Id

@@ -46,4 +46,33 @@ public class RetweetServiceImplTest {
 
         verify(retweetRepository).save(any(Retweet.class));
     }
+
+    @Test
+    void undoRetweet() {
+
+        Long tweetId = 1L;
+
+        User user = new User();
+        user.setId(2L);
+
+        Tweet tweet = new Tweet();
+        tweet.setId(tweetId);
+
+        Retweet retweet = new Retweet();
+        retweet.setId(10L);
+        retweet.setUser(user);
+        retweet.setTweet(tweet);
+
+        when(userService.getCurrentUser()).thenReturn(user);
+        when(tweetService.findById(tweetId)).thenReturn(tweet);
+        when(retweetRepository.findByUserAndTweet(user, tweet))
+                .thenReturn(retweet);
+
+
+        retweetServiceImpl.undoRetweet(tweetId);
+
+
+        verify(retweetRepository).delete(retweet);
+    }
+
 }

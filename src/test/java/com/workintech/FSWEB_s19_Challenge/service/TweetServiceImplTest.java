@@ -32,8 +32,7 @@ class TweetServiceImplTest {
     private UserService userService;
 
     @Test
-    void findByUserId_shouldReturnTweets_whenUserIsAuthorized() {
-        // GIVEN
+    void findByUserId() {
         Long userId = 1L;
 
         User user = new User();
@@ -47,17 +46,17 @@ class TweetServiceImplTest {
         when(userService.getCurrentUser()).thenReturn(user);
         when(tweetRepository.findByUserId(userId)).thenReturn(tweets);
 
-        // WHEN
+
         List<Tweet> result = tweetService.findByUserId(userId);
 
-        // THEN
+
         assertNotNull(result);
         assertEquals(2, result.size());
         verify(tweetRepository).findByUserId(userId);
     }
 
     @Test
-    void findById_shouldReturnTweet(){
+    void findById(){
 
         Long tweetId=1L;
 
@@ -73,8 +72,8 @@ class TweetServiceImplTest {
     }
 
     @Test
-    void create_shouldSaveAndReturnTweet_whenRequestIsValid() {
-        // GIVEN
+    void create() {
+
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setContent("Test tweet content");
 
@@ -89,10 +88,10 @@ class TweetServiceImplTest {
         when(userService.getCurrentUser()).thenReturn(user);
         when(tweetRepository.save(any(Tweet.class))).thenReturn(savedTweet);
 
-        // WHEN
+
         Tweet result = tweetService.create(tweetRequest);
 
-        // THEN
+
         assertNotNull(result);
         assertEquals("Test tweet content", result.getContent());
         assertEquals(user, result.getUser());
@@ -102,7 +101,7 @@ class TweetServiceImplTest {
     }
 
     @Test
-    void updateTweet() {
+    void update() {
         Long tweetId=1L;
         Tweet testTweet=new Tweet();
         User user = new User();
@@ -122,7 +121,7 @@ class TweetServiceImplTest {
     }
 
     @Test
-    void deleteTweet(){
+    void delete(){
         Long tweetId=1L;
         Tweet testTweet=new Tweet();
         User user = new User();
