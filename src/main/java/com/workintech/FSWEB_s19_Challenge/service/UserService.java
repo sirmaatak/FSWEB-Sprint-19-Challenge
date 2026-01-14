@@ -4,6 +4,8 @@ package com.workintech.FSWEB_s19_Challenge.service;
 import com.workintech.FSWEB_s19_Challenge.entity.User;
 import com.workintech.FSWEB_s19_Challenge.dto.LoginRequest;
 import com.workintech.FSWEB_s19_Challenge.dto.RegisterRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface UserService {
 
@@ -15,7 +17,7 @@ public interface UserService {
 
     User register(RegisterRequest registerRequest);
 
-    String login(LoginRequest loginRequest);
+    String login(LoginRequest loginRequest, HttpServletRequest httpRequest, HttpServletResponse httpResponse);
 
     User getCurrentUser();
 }

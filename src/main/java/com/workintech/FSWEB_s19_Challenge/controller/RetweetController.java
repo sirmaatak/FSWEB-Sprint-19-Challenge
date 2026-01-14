@@ -1,6 +1,7 @@
 package com.workintech.FSWEB_s19_Challenge.controller;
 
 
+import com.workintech.FSWEB_s19_Challenge.dto.LikeDislikeRetweetRequest;
 import com.workintech.FSWEB_s19_Challenge.service.RetweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class RetweetController {
 
 
     @PostMapping
-    public ResponseEntity<String> retweet(@RequestParam Long tweetId) {
-        retweetService.retweet(tweetId);
+    public ResponseEntity<String> retweet(@RequestBody LikeDislikeRetweetRequest request) {
+        retweetService.retweet(request.getTweetId());
         return ResponseEntity.ok("Tweet retweeted successfully");
     }
 

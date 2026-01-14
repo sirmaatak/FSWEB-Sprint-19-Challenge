@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TweetController {
 
-    private TweetService tweetService;
+    private final TweetService tweetService;
 
     @PostMapping
     public Tweet create(@RequestBody TweetRequest tweetRequest){

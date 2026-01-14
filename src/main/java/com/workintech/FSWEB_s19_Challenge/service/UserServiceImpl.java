@@ -5,13 +5,17 @@ import com.workintech.FSWEB_s19_Challenge.dto.LoginRequest;
 import com.workintech.FSWEB_s19_Challenge.dto.RegisterRequest;
 import com.workintech.FSWEB_s19_Challenge.exception.CustomException;
 import com.workintech.FSWEB_s19_Challenge.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -71,21 +75,21 @@ public class UserServiceImpl implements UserService {
 //        return "Login Successful for User : " + authentication.getName();
 //    }
 
-    @Override
-    public String login(LoginRequest request) {
-
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                request.getEmail(),
-                                request.getPassword()
-                        )
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return "Login successful";
-    }
+//    @Override
+//    public String login(LoginRequest request) {
+//
+//        Authentication authentication =
+//                authenticationManager.authenticate(
+//                        new UsernamePasswordAuthenticationToken(
+//                                request.getEmail(),
+//                                request.getPassword()
+//                        )
+//                );
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        return "Login successful";
+//    }
 
 
 
@@ -98,6 +102,25 @@ public class UserServiceImpl implements UserService {
 //
 //        return userRepository.findByUserName(userName);
 //    }
+
+
+    public String login(LoginRequest request,
+                        HttpServletRequest httpRequest,
+                        HttpServletResponse httpResponse) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+        );
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        new HttpSessionSecurityContextRepository()
+                .saveContext(context, httpRequest, httpResponse);
+
+        return "Login successful";
+    }
 
     @Override
     public User getCurrentUser() {

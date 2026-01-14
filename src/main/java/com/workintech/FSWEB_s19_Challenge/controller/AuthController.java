@@ -4,6 +4,8 @@ import com.workintech.FSWEB_s19_Challenge.entity.User;
 import com.workintech.FSWEB_s19_Challenge.dto.LoginRequest;
 import com.workintech.FSWEB_s19_Challenge.dto.RegisterRequest;
 import com.workintech.FSWEB_s19_Challenge.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +25,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest loginRequest){
-        return userService.login(loginRequest);
+    public String login(
+            @RequestBody LoginRequest loginRequest,
+            HttpServletRequest httpRequest,
+            HttpServletResponse httpResponse){
+        return userService.login(loginRequest,httpRequest,httpResponse);
     }
 
 }

@@ -80,7 +80,7 @@ class UserServiceImplTest {
                 .thenReturn(authentication);
 
 
-        String result=userService.login(loginRequest);
+        String result=userService.login(loginRequest,null,null);
 
         assertNotNull(result);
         assertEquals("Login successful",result);
