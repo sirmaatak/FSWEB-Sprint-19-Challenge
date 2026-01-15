@@ -31,6 +31,6 @@ public class Tweet {
 
     // User ile Tweet tablosunu bagladik
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 }

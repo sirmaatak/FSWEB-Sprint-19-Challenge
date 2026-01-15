@@ -21,8 +21,10 @@ public class Comment {
 
     //User ve Tweet tablosu ile bagladik
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "tweet_id",nullable = false)
     private Tweet tweet;
 }

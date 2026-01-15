@@ -4,6 +4,8 @@ import com.workintech.FSWEB_s19_Challenge.dto.LoginRequest;
 import com.workintech.FSWEB_s19_Challenge.dto.RegisterRequest;
 import com.workintech.FSWEB_s19_Challenge.entity.User;
 import com.workintech.FSWEB_s19_Challenge.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -74,13 +76,15 @@ class UserServiceImplTest {
         loginRequest.setEmail("test@mail.com");
         loginRequest.setPassword("123456");
 
+        HttpServletRequest request=mock(HttpServletRequest.class);
+        HttpServletResponse response=mock(HttpServletResponse.class);
         Authentication authentication = mock(Authentication.class);
 
         when(authManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
 
 
-        String result=userService.login(loginRequest,null,null);
+        String result=userService.login(loginRequest,request,response);
 
         assertNotNull(result);
         assertEquals("Login successful",result);

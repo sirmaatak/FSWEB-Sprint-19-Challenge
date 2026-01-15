@@ -1,0 +1,47 @@
+
+erDiagram
+tweet ||--|{ comment : has
+user ||--|{ tweet : has
+tweet ||--|{ like : has
+tweet ||--|{ retweet : has
+like }|--|| user : has
+comment }|--|| user : has
+retweet }|--|| user : has
+
+
+tweet {
+long	id	"Auto generated"
+string	content	"Filled by user"
+LocalDate	create_date
+LocalDate	update_date
+long	user_id
+}
+
+user {
+long	id	"Auto generated"
+String	full_name
+String	gender
+String	email
+String	password
+}
+
+retweet {
+long id	"Auto generated"
+LocalDate	create_date
+long user_id
+long tweet_id
+}
+
+comment {
+long	id	"Auto generated"
+String	content
+long	user_id
+long	tweet_id
+}
+
+like {
+long	id	"Auto generated"
+long user_id
+long tweet_id
+}
+

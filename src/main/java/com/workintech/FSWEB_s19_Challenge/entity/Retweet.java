@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(
-        name = "retweet",
+        name = "retweet",schema="tweet",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tweet_id"})
 )public class Retweet {
 
