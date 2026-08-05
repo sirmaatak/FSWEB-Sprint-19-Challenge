@@ -1,51 +1,220 @@
-# FSWEB-s19-Challenge
+# Twitter API
 
+A REST API for a Twitter-like social platform, built with Java and Spring Boot. The application supports user authentication, tweets, comments, likes, and retweets with ownership-based authorization rules.
 
-Twitter Api
+## Features
 
-Hedef:
+- User registration and login
+- Session-based authentication with Spring Security
+- BCrypt password hashing
+- Create, read, update, and delete tweets
+- Tweet ownership checks for update and delete operations
+- Create, update, and delete comments
+- Comment ownership and tweet ownership authorization
+- Like and unlike tweets
+- Duplicate-like prevention
+- Retweet and undo-retweet operations
+- Duplicate-retweet prevention
+- Centralized exception handling
+- Service and repository tests
 
-  Bu projenini amacı Spring Boot ile ilgili öğrendiğimiz tüm konuları Pratik etmek amacıyla bir Backend projesi tasarlamaktır.
-  Amacımız Twitter uygulamasını biz yazsaydık nasıl yazardık ? Nelere dikkat ederdik Design ve Implementation kısımlarını nasıl yapardık bunu test etmektir.
+## Tech Stack
 
-# Fonksiyonel Zorunluluklar
+| Area | Technologies |
+| --- | --- |
+| Language | Java 17 |
+| Framework | Spring Boot 3.2.1, Spring Web |
+| Security | Spring Security, BCrypt, HTTP sessions |
+| Database | PostgreSQL |
+| Persistence | Spring Data JPA, Hibernate |
+| Testing | JUnit 5, Mockito, H2 |
+| Build Tool | Maven |
 
-- Proje Spring Boot teknolojisi kullanarak dizayn edilecektir. Veritabanı olarak PostgreSQL kullanılacaktır.
-- Endpoints:
+## Architecture
 
-    ### EASY
-     *  http://localhost:3000/tweet[POST] => Tweet oluşturma ve veritabanına kaydetme. Tweet'in hangi kullanıcıya ait olduğu mutlaka tutulmalıdır. Anonym tweetler olmamalıdır.
-     *  http://localhost:3000/tweet/findByUserId[GET] => Bir kullanıcının tüm tweetlerini getirmelidir.
-     *  http://localhost:3000/tweet/findById[GET] => Bir tweet için tüm bilgilerini getirmelidir.
-     *  http://localhost:3000/tweet/:id[PUT] => Bir tweet üzerinde değiştirelecek kısımları update etmek için kullanılmalıdır.
-     *  http://localhost:3000/tweet/:id[DELETE] => Id bilgisi verilen tweeti silmek için kullanılır.(Sadece tweet sahibi ilgili tweeti silebilimelidir.)
+The project follows a layered architecture:
 
-    ### MEDIUM
-     * http://localhost:3000/comment/[POST] => Bir tweete bir kullanıcı tarafından yorum yazılmasını sağlar.
-     * http://localhost:3000/comment/:id[PUT] => Bir tweete bir kullanıcı tarafından yapılan yorumun update edilmesine olanak sağlar.
-     * http://localhost:3000/comment/:id[DELETE] => Bir tweete bir kullanıcı tarafından yapılan yorumun silinmesini sağlar(Sadece tweet sahibi veya yorum sahibi ilgili yorumu silebilmelidir).
-     * http://localhost:3000/like/[POST] => Bir tweete bir kullanıcı tarafından like atılmasını sağlar.
-     *  http://localhost:3000/dislike/[POST] => Bir tweete bir kullanıcı tarafından like atıldıysa bunun silinmesini sağlar.
-	
-    ### HARD
-     * http://localhost:3000/retweet/[POST] => Bir tweetin bir kullanıcı tarafından retweet edilmesini sağlar.(Twitter üzerinden retweet özelliğini test ediniz.)
-     * http://localhost:3000/retweet/:id[DELETE] => Retweet edilmiş bir tweetin silinmesi sağlanmalıdır.    
+- **Controller:** Handles HTTP requests and responses
+- **Service:** Contains business logic and authorization rules
+- **Repository:** Manages database operations with Spring Data JPA
+- **Entity:** Defines the database model and relationships
+- **DTO:** Transfers request data between the API and service layers
+- **Security:** Configures authentication and protected endpoints
+- **Exception:** Provides centralized API error handling
 
-# Mimari Zorunluluklar
+## Data Model
 
- - Apimizi hazırlarkan öncelikle tweet, user, comment, like, retweet gibi özellikleri ekleyebilmek adına veritabanımızın nasıl olması gerektiği ile ilgili bir hazırlık yapmalıyız.
-   Veritabanı dizaynı proje için yapmamız gereken ilk adım.
- - Controller/Service/Repository/Entity katmanlı mimarisi üzerinde sisteminizi dizayn etmelisiniz. 
- - Sisteminiz için tek bir merkezden Global Exception Handling yapmanız beklenmektedir.
- - Sisteminizde Entity katmanınız üzerinde veritabanınıza gidecek olan fieldlar için validasyon yapmış olmanız beklenmektedir.
- - Dependency Injection kurallarına uymalısınız.
- - Yukarda bahsedilen endpointler dışında /register ve /login isminde 2 tane daha endpointiniz olmalı ve security katmanını Spring Security kullanarak yönetmelisiniz.
- - Projenizde yazılmış fonksiyonları %30'u için Unit Test yazmanız baklenmektedir.
+The main entities are `User`, `Tweet`, `Comment`, `Like`, and `Retweet`.
 
+![Entity Relationship Diagram](Tweet_ER_Diagram.jpeg)
 
-# FullStack Developer Muscles:
+## API Endpoints
 
-  - Twitter Api için bir React ön yüzü oluşturunuz. Bu React ön yüzünün çok detaylı olmasına gerek yoktur. Mesela kullanıcının tüm tweetlerini ekrana basan bir component dizaynı yapılabilir.
-  - Burada amacımız CORS hatası denilen bir problemi gözlemleyip bunun çözümünü tecrübe etmektir. React uygulamanızı 3200 portundan ayağa kaldırınız. 
-  - Component'iniz üzerinde kendi yazdığınız endpointlerden biri olan http://localhost:3000/tweet/findByUserId adresine get requesti atınız. Gelen tweetleri ekrana bastırınız.
-  - Karşılaştığınız CORS hatasını nasıl çözersiniz ?
+All endpoints except registration and login require an authenticated session.
+
+### Authentication
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/auth/register` | Register a new user |
+| POST | `/auth/login` | Log in and create a session |
+
+### Tweets
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/tweet` | Create a tweet |
+| GET | `/tweet/findById/{id}` | Get a tweet by ID |
+| GET | `/tweet/findByUserId/{userId}` | Get the authenticated user's tweets |
+| PUT | `/tweet/{id}` | Update a tweet owned by the authenticated user |
+| DELETE | `/tweet/{id}` | Delete a tweet owned by the authenticated user |
+
+### Comments
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/comment` | Add a comment to a tweet |
+| PUT | `/comment/{id}` | Update a comment owned by the authenticated user |
+| DELETE | `/comment/{id}` | Delete a comment as its owner or the tweet owner |
+
+### Likes
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/like` | Like a tweet |
+| POST | `/dislike` | Remove the authenticated user's like |
+
+### Retweets
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/retweet` | Retweet a tweet |
+| DELETE | `/retweet/{tweetId}` | Undo the authenticated user's retweet |
+
+## Getting Started
+
+### Prerequisites
+
+- Java 17
+- PostgreSQL
+- Git
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/sirmaatak/twitter-api-spring-boot.git
+cd twitter-api-spring-boot
+```
+
+### 2. Create the database schema
+
+Run the following command in PostgreSQL:
+
+```sql
+CREATE SCHEMA IF NOT EXISTS tweet;
+```
+
+### 3. Configure the database
+
+Update `src/main/resources/application.properties` with your local PostgreSQL credentials:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+```
+
+### 4. Start the application
+
+macOS or Linux:
+
+```bash
+sh mvnw spring-boot:run
+```
+
+Windows:
+
+```powershell
+mvnw.cmd spring-boot:run
+```
+
+The API will be available at:
+
+```text
+http://localhost:8080
+```
+
+## Authentication Example
+
+Register a user:
+
+```bash
+curl -X POST http://localhost:8080/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"fullName":"Jane Doe","email":"jane@example.com","password":"strong-password"}'
+```
+
+Log in and save the session cookie:
+
+```bash
+curl -c cookies.txt -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"jane@example.com","password":"strong-password"}'
+```
+
+Create an authenticated tweet:
+
+```bash
+curl -b cookies.txt -X POST http://localhost:8080/tweet \
+  -H "Content-Type: application/json" \
+  -d '{"content":"My first tweet"}'
+```
+
+## Running Tests
+
+macOS or Linux:
+
+```bash
+sh mvnw test
+```
+
+Windows:
+
+```powershell
+mvnw.cmd test
+```
+
+The test suite includes service-layer unit tests and repository tests using Mockito and H2.
+
+## Project Structure
+
+```text
+src
+├── main
+│   ├── java
+│   │   └── controller
+│   │   └── dto
+│   │   └── entity
+│   │   └── exception
+│   │   └── repository
+│   │   └── security
+│   │   └── service
+│   └── resources
+└── test
+    ├── java
+    └── resources
+```
+
+## Future Improvements
+
+- Add request validation rules
+- Use response DTOs instead of returning entities directly
+- Move database credentials to environment variables
+- Add OpenAPI/Swagger documentation
+- Add broader integration test coverage
+- Provide a Docker-based development environment
+
+## Training
+
+Developed as part of the [Workintech Full Stack Web Developer Program](https://www.workintech.com.tr/fullstack-web-yazilimci-parttime).
