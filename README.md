@@ -116,14 +116,30 @@ CREATE SCHEMA IF NOT EXISTS tweet;
 
 ### 3. Configure the database
 
-Update `src/main/resources/application.properties` with your local PostgreSQL credentials:
+The application reads the database password from the `DB_PASSWORD` environment variable. The default database URL and username can optionally be overridden with `DB_URL` and `DB_USERNAME`.
 
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
+Windows PowerShell:
+
+```powershell
+$env:DB_PASSWORD = "your_password"
+
+# Optional overrides
+$env:DB_USERNAME = "postgres"
+$env:DB_URL = "jdbc:postgresql://localhost:5432/postgres"
 ```
+
+macOS or Linux:
+
+```bash
+export DB_PASSWORD="your_password"
+
+# Optional overrides
+export DB_USERNAME="postgres"
+export DB_URL="jdbc:postgresql://localhost:5432/postgres"
+```
+
+These values apply to the current terminal session. Start the application from the same terminal.
+
 
 ### 4. Start the application
 
@@ -210,7 +226,6 @@ src
 
 - Add request validation rules
 - Use response DTOs instead of returning entities directly
-- Move database credentials to environment variables
 - Add OpenAPI/Swagger documentation
 - Add broader integration test coverage
 - Provide a Docker-based development environment
